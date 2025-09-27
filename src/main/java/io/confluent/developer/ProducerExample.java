@@ -3,8 +3,10 @@ package io.confluent.developer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
@@ -15,7 +17,7 @@ public class ProducerExample {
     public static void main(final String[] args) {
         final Properties props = new Properties() {{
             // User-specific properties that you must set
-            put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+            put(BOOTSTRAP_SERVERS_CONFIG, "localhost:51381");
 
             // Fixed properties
             put(KEY_SERIALIZER_CLASS_CONFIG,   StringSerializer.class.getCanonicalName());
@@ -28,6 +30,7 @@ public class ProducerExample {
         String[] users = {"eabara", "jsmith", "sgarcia", "jbernard", "htanaka", "awalther"};
         String[] items = {"book", "alarm clock", "t-shirts", "gift card", "batteries"};
         try (final Producer<String, String> producer = new KafkaProducer<>(props)) {
+
             final Random rnd = new Random();
             final int numMessages = 10;
             for (int i = 0; i < numMessages; i++) {
@@ -37,6 +40,7 @@ public class ProducerExample {
                 producer.send(
                         new ProducerRecord<>(topic, user, item),
                         (event, ex) -> {
+                            System.out.println(event.toString());
                             if (ex != null)
                                 ex.printStackTrace();
                             else

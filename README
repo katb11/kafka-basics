@@ -1,7 +1,6 @@
-This project will use a local Kafka Cluster. These instructions install Kafka to your machine, starts a cluster, and
-creates a topic
+This project will use a local Kafka Cluster.
 
-To create a cluster:
+To create and start the cluster, and to add the topic:
 
 1. Ensure WSL is installed on your machine if running on Windows
 
@@ -33,12 +32,24 @@ To create a cluster:
 5. Use the command "confluent local kafka start" in your linux or mac terminal. For windows, add the installation folder
 containing confluent.exe to system path, then run the command.
 
+    -this will produce the ports to configure your producers and consumers with
+
+    -example:
+        +-----------------+-------+
+        | Kafka REST Port | 8082  |
+        | Plaintext Ports | 51381 |
+        +-----------------+-------+
+
+    - use the plain text port for your classes in the BOOTSTRAP_SERVERS_CONFIG variable
+
 6. run "confluent local kafka topic create purchases" to create the purchases topic used in this application
 
 ========================================================================================================================
 
-Notes
+To install shadowJar:
 
-- The default local Kafka port is 9092. If you have enabled access through another port, update the value of BOOTSTRAP_SERVERS_CONFIG
+1. in main director use the command "gradle shadowJar" or run the gradle wrapper "./gradlew shadowJar"
 
+========================================================================================================================
 
+Run "confluent local kafka stop" to stop the cluster.
