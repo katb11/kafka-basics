@@ -1,0 +1,44 @@
+This project will use a local Kafka Cluster. These instructions install Kafka to your machine, starts a cluster, and
+creates a topic
+
+To create a cluster:
+
+1. Ensure WSL is installed on your machine if running on Windows
+
+    - open PowerShell as administrator
+    - use command "wsl --install"
+    - after installation, restart
+
+2. Install Docker Desktop or Docker Engine
+
+    https://docs.docker.com/desktop/setup/install/windows-install/
+
+3. Verify installation
+
+    docker info
+
+4. Install confluent CLI:
+
+    linux/mac
+    brew install confluentinc/tap/cli
+
+    windows
+    - download the .zip from https://github.com/confluentinc/cli/releases/latest
+    - unzip
+    - from command line, run confluent.exe
+
+    see other methods here:
+    https://docs.confluent.io/confluent-cli/current/install.html
+
+5. Use the command "confluent local kafka start" in your linux or mac terminal. For windows, add the installation folder
+containing confluent.exe to system path, then run the command.
+
+6. run "confluent local kafka topic create purchases" to create the purchases topic used in this application
+
+========================================================================================================================
+
+Notes
+
+- The default local Kafka port is 9092. If you have enabled access through another port, update the value of BOOTSTRAP_SERVERS_CONFIG
+
+
